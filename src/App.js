@@ -1,6 +1,5 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import './App.css';
-import { ThemeContext, LocaleContext } from './context'
 
 class App extends Component {
   render() {
@@ -69,6 +68,16 @@ const GreetFunc = () => {
      setSurname(e.target.value) 
    }
 
+
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    }
+  })
+
   return(
     <section>
       <input
@@ -79,6 +88,11 @@ const GreetFunc = () => {
       <input
         value={surname} 
         onChange={handleSurnameChange}
+      >
+      </input> 
+      <p> some width from useEffect </p>
+      <input
+        value={width} 
       >
       </input> 
     </section> 
